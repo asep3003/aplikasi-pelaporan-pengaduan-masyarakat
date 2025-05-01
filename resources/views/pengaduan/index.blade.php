@@ -47,12 +47,17 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {!! 
+                                    {!!
                                         $pengaduan->status == "0" ? '<span class="badge text-bg-secondary">Pending</span>' :
                                         ($pengaduan->status == "Proses" ? '<span class="badge text-bg-warning">Proses</span>' : '<span class="badge text-bg-success">Selesai</span>')
                                     !!}
                                 </td>
                                 <td>
+                                    <a class="text-decoration-none" >
+                                        <button type="button" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#modal{{ $loop->index }}">
+                                            <img src="{{ asset('assets/bootstrap-icons/eye.svg') }}" width="20px" alt="">
+                                        </button>
+                                    </a>
                                     <a class="text-decoration-none" href="/pengaduan/edit/{{ $pengaduan->id }}">
                                         <button type="button" class="btn btn-warning btn-sm">
                                             <img src="{{ asset('assets/bootstrap-icons/pencil-square.svg') }}" width="20px" alt="">
@@ -65,6 +70,34 @@
                                     </a>
                                 </td>
                             </tr>
+
+                            {{-- Modal --}}
+                            <div class="modal fade" id="modal{{ $loop->index }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+                                    role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Detail Pengaduan</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                                <i data-feather="x"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{{ asset($pengaduan->foto) }}" alt="" class="w-100 mb-2">
+                                            <p>Tanggal Ditanggapi : {{ $pengaduan->getDataTanggapan?->tgl_tanggapan }}</p>
+                                            <p>Tanggapan : {{ $pengaduan->getDataTanggapan?->tanggapan }}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light-secondary"
+                                                data-bs-dismiss="modal">
+                                                <i class="bx bx-x d-block d-sm-none"></i>
+                                                <span class="d-none d-sm-block">Close</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </tbody>
                 </table>
